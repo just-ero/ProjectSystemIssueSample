@@ -1,0 +1,16 @@
+<Project>
+
+  <Target Name="_BuildPlugins" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <_Plugins Include="$(PluginsPath)\*\*.csproj" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_PluginsOutputPath>$(OutputPath)\Plugins</_PluginsOutputPath>
+    </PropertyGroup>
+
+    <MSBuild Projects="@(_Plugins)" Targets="Restore" Properties="IsRestoring=true" />
+    <MSBuild Projects="@(_Plugins)" Targets="Build" Properties="OutputPath=$(_PluginsOutputPath)" />
+  </Target>
+
+</Project>
